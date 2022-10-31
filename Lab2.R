@@ -34,21 +34,21 @@ boxplot_payments <- function(data, payments){
 #' @importFrom knitr
 #' @examples
 #' statistics_summary(DRG_data, "DRG.Definition", "Average.Medicare.Payments", "stdev")
-statistics_summary <- function(data, column1, column2, type)#type = mean, median
+statistics_summary <- function(data, column1, column2, type)#type = mean, median 
 {
   DRG <- data %>%
     mutate(def = sub("-.*", "", DRG.Definition)) ## mutate the DRG.Definition to first 3 digitals
   
   if (type == "average"){  ## calculate the mean
-    stats<-data%>%group_by(get(column1))%>%summarise(Average.Payments=(mean(get(column2))))
+    stats <- data %>% group_by(get(column1)) %>% summarise(Average.Payments = (mean(get(column2))))
   }
 
   if(type == "median"){  ## calculate the median
-    stats<-data%>%group_by(get(column1))%>%summarise(Median.Payments=(median(get(column2))))
+    stats <- data %>% group_by(get(column1)) %>% summarise(Median.Payments = (median(get(column2))))
   }
   
   if (type == "stdev"){  ## calculate the standard deviation
-    stats<-data%>%group_by(get(column1))%>%summarise(Standard.Deviation=(sd(get(column2))))
+    stats<-data %>% group_by(get(column1)) %>% summarise(Standard.Deviation = (sd(get(column2))))
   }
   
   colnames(stats)[1] <- (column1)
