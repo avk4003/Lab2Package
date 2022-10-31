@@ -12,14 +12,15 @@
 #' boxplot_payments(DRG_data, "Average.Total.Payments")
 boxplot_payments <- function(data, payments){
   DRG <- data %>%
-    mutate(def = sub("-.*", "", DRG.Definition))
+    mutate(def = sub("-.*", "", DRG.Definition))  ## mutate the DRG.Definition to first 3 digitals
 
-  ggplot(DRG, aes(x = def, y = get(payments))) +
-    geom_boxplot()+theme(axis.text.x = element_text(angle = 90))+
+  ggplot(DRG, aes(x = def, y = get(payments))) +  ## initial plot
+    geom_boxplot() +  ## make boxplot
+    theme(axis.text.x = element_text(angle = 90))+  ## tilt the x-axis
     labs(
-      x = 'Codes', ## relabel x axis # rubric says "Create function for DRG ONLY"
+      x = 'Codes', ## relabel x axis
       y = "Average Payments", ## relabel y axis
-      title = str_to_title(gsub("[.]", " ", str_to_title(payments))))
+      title = str_to_title(gsub("[.]", " ", str_to_title(payments))))  ## name the title
 }
 #' DRG statistics
 #'
@@ -33,20 +34,25 @@ boxplot_payments <- function(data, payments){
 #' @importFrom knitr
 #' @examples
 #' statistics_summary(DRG_data, "DRG.Definition", "Average.Medicare.Payments", "stdev")
-statistics_summary<-function(data, column1, column2, type)#type = mean, median
+statistics_summary <- function(data, column1, column2, type)#type = mean, median
 {
-  if (type == "average"){
+  DRG <- data %>%
+    mutate(def = sub("-.*", "", DRG.Definition)) ## mutate the DRG.Definition to first 3 digitals
+  
+  if (type == "average"){  ## calculate the mean
     stats<-data%>%group_by(get(column1))%>%summarise(Average.Payments=(mean(get(column2))))
-
   }
 
-  if(type == "median"){
+  if(type == "median"){  ## calculate the median
     stats<-data%>%group_by(get(column1))%>%summarise(Median.Payments=(median(get(column2))))
   }
-  if (type == "stdev"){
+  
+  if (type == "stdev"){  ## calculate the standard deviation
     stats<-data%>%group_by(get(column1))%>%summarise(Standard.Deviation=(sd(get(column2))))
   }
+  
   colnames(stats)[1] <- (column1)
 
-  kable(stats, col.names = gsub("[.]", " ", names(stats)), caption = "Table of DRG Codes Stats")
+  kable(stats, col.names = gsub("[.]", " ", names(stats)), caption = "Table of DRG Codes Stats")  ## kable the table
+
 }
