@@ -1,0 +1,25 @@
+```{r}
+library(tidyverse)
+library(knitr)
+DRG_data <- read.csv("DRG_data.csv")
+```
+
+```{}
+```
+
+```{r}
+setwd('..')
+install.packages("Lab2Package", repos = "http://cran.us.r-project.org")
+```
+
+```{r}
+
+Lab2Package::boxplot_payments(DRG_data, "Average.Total.Payments")
+Lab2Package::boxplot_payments(DRG_data, "Average.Medicare.Payments")
+```
+
+```{r}
+
+Lab2Package::statistics_summary(DRG_data, "DRG.Definition", "Average.Medicare.Payments", "median")
+Lab2Package::statistics_summary(DRG_data, "DRG.Definition", "Average.Medicare.Payments", "stdev")
+```
