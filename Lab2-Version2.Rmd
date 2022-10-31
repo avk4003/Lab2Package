@@ -93,6 +93,6 @@ DRG_mean <- DRG_stat(DRG,'mean') ## calculate mean
 DRG_mean
 DRG_median <- DRG_stat(DRG,'median') ## calculate median
 DRG_median
-DRG_sd <- DRG_stat(DRG,'sd') ## calculate sd
+DRG_sd <- DRG_stat(DRG,'sd') ## calculate standard deviation
 DRG_sd
 ```
