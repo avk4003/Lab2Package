@@ -9,17 +9,19 @@ DRG_data <- read.csv("DRG_data.csv")
 
 ```{r}
 setwd('..')
-install.packages("Lab2Package", repos = "http://cran.us.r-project.org")
+install.packages("Lab2Package", repos = "http://cran.us.r-project.org") # install r package
 ```
 
 ```{r}
-
+# Test boxplot function from r package
 Lab2Package::boxplot_payments(DRG_data, "Average.Total.Payments")
 Lab2Package::boxplot_payments(DRG_data, "Average.Medicare.Payments")
 ```
 
 ```{r}
-
-Lab2Package::statistics_summary(DRG_data, "DRG.Definition", "Average.Medicare.Payments", "median")
+# Test data table function from r package
+# table with median data
+Lab2Package::statistics_summary(DRG_data, "DRG.Definition", "Average.Medicare.Payments", "median") 
+# table with standard deviation data
 Lab2Package::statistics_summary(DRG_data, "DRG.Definition", "Average.Medicare.Payments", "stdev")
 ```
