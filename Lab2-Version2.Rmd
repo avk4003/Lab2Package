@@ -1,0 +1,59 @@
+
+---
+title: "Lab2 Function- Version 2"
+author: "by Yuxiao Rui, Ruijie Zhong"
+date: "10/31/2022"
+output:
+  html_document:
+    toc: yes
+    toc_depth: 1
+    toc_float: yes
+    fig_height: 7
+    fig_width: 7
+  word_document:
+    toc: no
+  pdf_document:
+    fig_height: 3.5
+    fig_width: 3.5
+---
+
+#### This is the second version of lab2 function written by Yuxiao Rui and Ruijie Zhong
+
+```{r load packages}
+library(tidyverse)
+library(ggplot2)
+```
+
+```{r load datas}
+DRG <- read.csv('DRG_data.csv')
+```
+
+## Function 2
+```{r}
+## Function that calculates statistics over all of the DRG codes for average Medicare payments
+DRG_stat <- function(data, 
+                     stat){
+  DRG_stat <- DRG %>%
+    mutate(DRG_code = sub('-.*','',DRG$DRG.Definition)) %>% ## change DRG to 3-digit code
+    group_by(DRG_code) %>% ## group by all code
+    summarise(
+      if (stat =='mean'){
+      mean = mean(Average.Medicare.Payments) %>% round(3) ## mean of average Medicare payments
+    }
+    else if (stat == 'median'){
+      median = median(Average.Medicare.Payments) %>% round(3) ## median of average Medicare payments
+    }
+    else {
+      sd = sd(Average.Medicare.Payments) %>% round(3) ## standard deviation of average Medicare payments
+    }
+  ) 
+  names(DRG_stat) <- c('DRG',stat) ## rename the column
+  return(DRG_stat)
+}
+DRG_mean <- DRG_stat(DRG,'mean') ## calculate mean
+DRG_mean
+DRG_median <- DRG_stat(DRG,'median') ## calculate median
+DRG_median
+DRG_sd <- DRG_stat(DRG,'sd') ## calculate sd
+DRG_sd
+```
