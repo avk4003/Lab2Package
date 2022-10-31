@@ -28,6 +28,45 @@ library(ggplot2)
 DRG <- read.csv('DRG_data.csv')
 ```
 
+## Function 1
+```{r}
+## write a function to make a boxplot of payments by DRG code
+boxplot_payments <- function(data, type){  ## define the function
+  
+  data <- data %>%
+    mutate(DRG.Definition = substr(DRG.Definition, 0, 3))  ## mutate the DRG definition to first 3 numbers
+  
+  if(type == "Medicare"){  ## for average Medicare payments
+    ggplot(data, aes(y = Average.Medicare.Payments, x = DRG.Definition)) +  
+      geom_boxplot() +  ## make a boxplot
+      theme(axis.text.x = element_text(angle = 90, 
+                                       vjust = 1, 
+                                       hjust = 1)) +  ## tilt the x-axis
+      labs(x = "DRG code",  ## relabel x-axis
+           y = "average medicare payments",  ## relabel y-axis
+           title = "Boxplots of Average Medicare Payments by DRG Code")  ## rename the title
+  }else if(type == "Total"){  ## for average total payments
+    ggplot(data, aes(y = Average.Total.Payments, x = DRG.Definition)) +  
+      geom_boxplot() +  ## make a boxplot
+      theme(axis.text.x = element_text(angle = 90, 
+                                       vjust = 1, 
+                                       hjust = 1)) +  ## tilt the x-axis
+      labs(x = "DRG code",  ## relabel x-axis
+           y = "average total payments",  ## relabel y-axis
+           title = "Boxplots of Average Total Payments by DRG Code")  ## rename the title
+  }else if(type == "Covered"){  ## for average covered charges
+    ggplot(data, aes(y = Average.Covered.Charges, x = DRG.Definition)) +  
+      geom_boxplot() +  ## make a boxplot
+      theme(axis.text.x = element_text(angle = 90, 
+                                       vjust = 1, 
+                                       hjust = 1)) +  ## tilt the x-axis
+      labs(x = "DRG code",  ## rename x-axis
+           y = "average covered charges",  ## relabel y-axis
+           title = "Boxplots of Average Covered Charges by DRG Code")  ## rename the title
+  }
+}
+```
+
 ## Function 2
 ```{r}
 ## Function that calculates statistics over all of the DRG codes for average Medicare payments
